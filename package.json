@@ -1,6 +1,6 @@
 {
     "name": "fo-tester",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Frontend Tester (tech/e2e/visual)",
     "main": "src/index.html",
     "scripts": {
