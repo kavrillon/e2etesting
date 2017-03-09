@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="canonical" href="https://kavrillon.github.io/fo-tester">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title><!-- @echo APP_NAME --></title>
+
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+
+        <!-- build:cssVendor vendor.css -->
+        <!-- bower:css -->
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:cssApp app.css -->
+        <link rel="stylesheet" href="app.css">
+        <!-- endbuild -->
+    </head>
+    <body class="app">
+        @@include('./app/partials/_header.html')
+
+        <main class="app__content">
+            @@include('./app/partials/_content.html')
+        </main>
+
+        <!-- build:jsVendor vendor.js -->
+        <!-- bower:js -->
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:jsApp app.js -->
+        <script src="app.js" async defer></script>
+        <!-- endbuild -->
+    </body>
+</html>
