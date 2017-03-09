@@ -25,6 +25,7 @@ exports.config = {
     port: 80,
     user: process.env.BROWSERSTACK_USERNAME,
     key: process.env.BROWSERSTACK_ACCESS_KEY,
+    browserstackLocal: true,
 
 
     //
@@ -71,9 +72,11 @@ exports.config = {
     },
     capabilities: [
         {
-            maxInstances: 5,
+            // maxInstances: 5,
             browserName: 'firefox',
-            platform: 'WIN8'
+            platform: 'WIN8',
+            'browserstack.debug': true,
+            'browserstack.local': true
         },/*
         {
             maxInstances: 5,
@@ -123,7 +126,7 @@ exports.config = {
     //
     // Set a base URL in order to shorten url command calls. If your url parameter starts
     // with "/", then the base url gets prepended.
-    baseUrl: 'https://kavrillon.github.io/fo-tester',
+    baseUrl: 'http://localhost:8080',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -199,7 +202,7 @@ exports.config = {
             misMatchTolerance: 0.01,
         }),
         viewportChangePause: 300,
-        widths: [480, 768, 992, 1200],
+        widths: [/*480, 768, 992, */1200],
         orientations: ['landscape', 'portrait'],
     },
 
