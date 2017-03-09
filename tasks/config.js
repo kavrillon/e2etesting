@@ -14,7 +14,7 @@ const paths = {
 };
 
 const globs = {
-    repo: 'https://github.com/kavrillon/fo-sprints.git',
+    repo: 'https://github.com/kavrillon/fo-tester.git',
     bower: `${paths.bowerComponents}/**/*`,
     fonts: `${paths.fonts}/**/*`,
     html: `${paths.app}/**/*.html`,
