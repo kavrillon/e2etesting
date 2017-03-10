@@ -1,5 +1,13 @@
 var path = require('path');
 var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
+var currentdate = new Date();
+var datetime = currentdate.getFullYear() + '/'
+    + (currentdate.getMonth()+1)  + '/'
+    + currentdate.getDate() + '_'
+    + currentdate.getHours() + ':'
+    + currentdate.getMinutes() + ':'
+    + currentdate.getSeconds();
+
 function getScreenshotName(basePath) {
     return function(context) {
         // var type = context.type;
@@ -65,36 +73,60 @@ exports.config = {
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://docs.saucelabs.com/reference/platforms-configurator
+    // https://www.browserstack.com/automate/node
     //
     commonCapabilities: {
-        name: 'visual-regressions-check',
-        build: 'Visual regressions check'
+        build: 'FO Tester'
     },
     capabilities: [
+        // {
+        //     'name': 'IE-10',
+        //     'browserName' : 'IE',
+        //     'browser_version' : '10.0',
+        //     'os' : 'Windows',
+        //     'os_version' : '8',
+        //     'resolution' : '1024x768',
+        //     'browserstack.local': true
+        // },
+        // {
+        //     'name': 'IE-11',
+        //     'browserName' : 'IE',
+        //     'browser_version' : '11.0',
+        //     'os' : 'Windows',
+        //     'os_version' : '10',
+        //     'resolution' : '1024x768',
+        //     'browserstack.local': true
+        // },
+        // {
+        //     'name': 'Edge-LastVersion',
+        //     'browserName' : 'Edge', // last version
+        //     'os' : 'Windows',
+        //     'os_version' : '10',
+        //     'resolution' : '1024x768',
+        //     'browserstack.local': true
+        // },
         {
-            // maxInstances: 5,
-            browserName: 'firefox',
-            platform: 'WIN8',
+            'name': 'Firefox-LastVersion',
+            'browserName' : 'Firefox', // last version
+            'os' : 'Windows',
+            'os_version' : '10',
+            'resolution' : '1024x768',
             'browserstack.local': true
         },
+        // {
+        //     'name': 'Chrome-LastVersion',
+        //     'browserName' : 'Chrome', // last version
+        //     'os' : 'Windows',
+        //     'os_version' : '10',
+        //     'resolution' : '1024x768',
+        //     'browserstack.local': true
+        // },
         {
-            maxInstances: 5,
-            browserName: 'chrome',
-            platform: 'WIN8',
-            'browserstack.local': true
-        },
-        {
-            maxInstances: 5,
-            browserName: 'internet explorer',
-            version: 10,
-            platform: 'WIN8',
-            'browserstack.local': true
-        },
-        {
-            maxInstances: 5,
-            browserName: 'safari',
-            version: 10,
-            platform: 'MAC',
+            'name': 'Safari-LastVersion',
+            'browserName' : 'Safari', // last version
+            'os' : 'OS X',
+            'os_version' : 'Sierra',
+            'resolution' : '1024x768',
             'browserstack.local': true
         }],
     //
@@ -109,7 +141,7 @@ exports.config = {
     sync: true,
     //
     // Level of logging verbosity: silent | verbose | command | data | result | error
-    logLevel: 'error',
+    logLevel: 'silent',
     //
     // Enables colors for log output.
     coloredLogs: true,
@@ -193,8 +225,8 @@ exports.config = {
 
     visualRegression: {
         compare: new VisualRegressionCompare.LocalCompare({
-            referenceName: getScreenshotName(path.join(process.cwd(), 'screenshots/reference')),
-            screenshotName: getScreenshotName(path.join(process.cwd(), 'screenshots/screen')),
+            referenceName: getScreenshotName(path.join(process.cwd(), 'screenshots/baseline')),
+            screenshotName: getScreenshotName(path.join(process.cwd(), 'screenshots/current')),
             diffName: getScreenshotName(path.join(process.cwd(), 'screenshots/diff')),
             misMatchTolerance: 0.01,
         }),
@@ -278,5 +310,9 @@ exports.config = {
 
 exports.config.capabilities.forEach(function(caps){
     for(var i in exports.config.commonCapabilities) caps[i] = caps[i] || exports.config.commonCapabilities[i];
+});
+
+exports.config.capabilities.forEach(function(caps){
+    caps.name = datetime + '_' + caps.name;
 });
 

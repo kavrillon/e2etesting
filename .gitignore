@@ -8,3 +8,5 @@ dist
 .publish
 .version.json
 local.log
+errorShots
+screenshots/current
