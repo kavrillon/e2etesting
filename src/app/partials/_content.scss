@@ -19,11 +19,11 @@
 
     &__tests {
         &__sample1 {
-            background-color: red;
+            background-color: blue;
             width: 100px;
             height: 100px;
             display: block;
-            margin: 100px auto;
+            margin: 100px 100px;
         }
     }
 }
