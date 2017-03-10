@@ -4,7 +4,8 @@
     "description": "Frontend Tester (tech/e2e/visual)",
     "main": "src/index.html",
     "scripts": {
-        "test": "./node_modules/.bin/wdio wdio.conf.js"
+        "test": "./node_modules/.bin/wdio wdio.conf.js",
+        "test:validate": "rm -rf screenshots/baseline && mv screenshots/current screenshots/baseline"
     },
     "repository": {
         "type": "git",

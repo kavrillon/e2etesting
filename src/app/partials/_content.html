@@ -2,23 +2,33 @@
     <h2>Tool for e2e & visual regression tester</h2>
     <div class="content__doc">
         <h3>Installation</h3>
+
         <div class="content__doc__step">
             Clone the repo and go in the root folder, then:
             <div class="content__doc__step__cmd">
                 npm install
             </div>
         </div>
+
         <div class="content__doc__step">
-            Configure your Browserstack informations: (available here: https://www.browserstack.com/accounts/settings)
+            Configure your Browserstack informations: (available here: <a href="https://www.browserstack.com/accounts/settings">https://www.browserstack.com/accounts/settings</a>)
             <div class="content__doc__step__cmd">
                 <div>export BROWSERSTACK_USERNAME=YOUR_USERNAME</div>
                 <div>export BROWSERSTACK_ACCESS_KEY==YOUR_KEY</div>
             </div>
         </div>
+
         <div class="content__doc__step">
             And run:
             <div class="content__doc__step__cmd">
                 npm run test
+            </div>
+        </div>
+
+        <div class="content__doc__step">
+            If visual diff fails, you'll have to review each screenshot in screenshots/diff & screenshots/current and validate that it's ok. If it's ok, run:
+            <div class="content__doc__step__cmd">
+                npm run test:validate
             </div>
         </div>
 
@@ -36,9 +46,6 @@
         </div>
         <div class="content__doc__step">
             Multiple links
-        </div>
-        <div class="content__doc__step">
-            Diff validation
         </div>
     </div>
 </div>
