@@ -85,11 +85,6 @@ exports.config = {
         },
         {
             maxInstances: 5,
-            browserName: 'chrome',
-            platform: 'WIN8'
-        },
-        {
-            maxInstances: 5,
             browserName: 'internet explorer',
             version: 10,
             platform: 'WIN8'
