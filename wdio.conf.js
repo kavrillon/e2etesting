@@ -75,31 +75,28 @@ exports.config = {
             // maxInstances: 5,
             browserName: 'firefox',
             platform: 'WIN8',
-            'browserstack.debug': true,
             'browserstack.local': true
-        },/*
-        {
-            maxInstances: 5,
-            browserName: 'chrome',
-            platform: 'WIN8'
         },
         {
             maxInstances: 5,
             browserName: 'chrome',
-            platform: 'WIN8'
+            platform: 'WIN8',
+            'browserstack.local': true
         },
         {
             maxInstances: 5,
             browserName: 'internet explorer',
             version: 10,
-            platform: 'WIN8'
+            platform: 'WIN8',
+            'browserstack.local': true
         },
         {
             maxInstances: 5,
             browserName: 'safari',
             version: 10,
-            platform: 'MAC'
-        }*/],
+            platform: 'MAC',
+            'browserstack.local': true
+        }],
     //
     // ===================
     // Test Configurations
