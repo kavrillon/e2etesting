@@ -1,3 +1,4 @@
+var w3cjs = require('w3cjs');
 const url = '/?' + Math.random(); // add some randomness for cache
 
 describe('Technical', () => {
@@ -62,6 +63,27 @@ describe('Technical', () => {
         });
 
         expect(isValid).toBe(true);
+    });
+
+    it('should have no w3c errors', () => {
+        browser.url(url);
+
+        const html = browser.getSource();
+
+        w3cjs.validate({
+            input: html,
+            callback: function (res) {
+                expect(res.messages.length).toBe(0);
+                // done();
+                // res.messages.forEach((msg) => {
+                //     console.log(msg.type + ' - ' + msg.message + ' (' + msg.lastLine + ')');
+                //     // fail(msg);
+                // });
+                // if (res.messages.length > 0 ) {
+                //     throw {error: 'html errors have been found', results: res};
+                // }
+            }
+        });
     });
 });
 
