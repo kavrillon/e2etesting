@@ -42,6 +42,27 @@ describe('Technical', () => {
 
         expect(isHiddenTitle).toBe(false);
     });
+
+    it('should have no hierarchy break (h levels)', () => {
+        browser.url(url);
+
+        let isValid = true;
+        let headings = browser.getTagName('h1,h2,h3,h4,h5,h6');
+        let level = 0;
+
+        headings.forEach((elt) => {
+            const match = elt.match(/[0-9]/);
+            if (match) {
+                const val = match[0];
+                if (val - level > 1) {
+                    isValid = false;
+                }
+                level = val;
+            }
+        });
+
+        expect(isValid).toBe(true);
+    });
 });
 
 // describe('Functional', () => {
