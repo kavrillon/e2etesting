@@ -11,10 +11,15 @@
         </div>
 
         <div class="content__doc__step">
-            Configure your Browserstack informations: (available here: <a href="https://www.browserstack.com/accounts/settings">https://www.browserstack.com/accounts/settings</a>)
+            If you want to use Browsterstack, configure your informations: (available here: <a href="https://www.browserstack.com/accounts/settings">https://www.browserstack.com/accounts/settings</a>)
             <div class="content__doc__step__cmd">
                 <div>export BROWSERSTACK_USERNAME=YOUR_USERNAME</div>
-                <div>export BROWSERSTACK_ACCESS_KEY==YOUR_KEY</div>
+                <div>export BROWSERSTACK_ACCESS_KEY=YOUR_KEY</div>
+            </div>
+            Or use PhantomJS with a standalone Selenium server (available here: <a href="http://selenium-release.storage.googleapis.com/index.html">http://selenium-release.storage.googleapis.com/index.html</a>)
+            <div class="content__doc__step__cmd">
+                <div>java -jar selenium-server-standalone-X.XX.X.jar</div>
+                <div>export HEADLESS_PHANTOM=true</div>
             </div>
         </div>
 
@@ -41,9 +46,6 @@
         </div>
 
         <h3>TODO</h3>
-        <div class="content__doc__step">
-            PhantomJS
-        </div>
         <div class="content__doc__step">
             Multiple links
         </div>

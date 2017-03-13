@@ -1,5 +1,26 @@
+/*
+ * Requires
+ * -----------------------------------------------------------------------------
+ */
+
 var path = require('path');
 var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
+
+/*
+ * Script parameters
+ * -----------------------------------------------------------------------------
+ */
+
+var phantom = process.env.HEADLESS_PHANTOM == 'true' || false;
+
+var browserStackUsername = process.env.BROWSERSTACK_USERNAME;
+var browserStackAccessKey = process.env.BROWSERSTACK_ACCESS_KEY;
+
+/*
+ * Variables
+ * -----------------------------------------------------------------------------
+ */
+
 var currentdate = new Date();
 var datetime = currentdate.getFullYear() + '/'
     + (currentdate.getMonth()+1)  + '/'
@@ -7,6 +28,101 @@ var datetime = currentdate.getFullYear() + '/'
     + currentdate.getHours() + ':'
     + currentdate.getMinutes() + ':'
     + currentdate.getSeconds();
+
+
+var browsers = [];
+var user, key;
+var host = '0.0.0.0';
+var port = 4444;
+var browserstackLocal = false;
+var services = ['visual-regression'];
+
+/*
+ * Check Browserstack username & access key (if not in PhantomJS mode)
+ * -----------------------------------------------------------------------------
+ */
+
+if (!phantom && process.env.BROWSERSTACK_USERNAME == null) {
+    throw 'You need to set your BrowserStack username as BROWSERSTACK_USERNAME enviroment variable!';
+}
+
+if (!phantom && process.env.BROWSERSTACK_ACCESS_KEY == null) {
+    throw 'You need to set your BrowserStack access key as BROWSERSTACK_ACCESS_KEY enviroment variable!';
+}
+
+/*
+ * Browsers Configuration
+ * -----------------------------------------------------------------------------
+ */
+
+if (phantom === true) {
+    browsers = [{browserName: 'phantomjs'}];
+}
+else {
+    host = 'hub.browserstack.com';
+    port = 80;
+    user = browserStackUsername;
+    key = browserStackAccessKey;
+    browserstackLocal = true;
+    services.push('browserstack');
+    browsers = [
+        // {
+        //     'name': 'IE-10',
+        //     'browserName' : 'IE',
+        //     'browser_version' : '10.0',
+        //     'os' : 'Windows',
+        //     'os_version' : '8',
+        //     'resolution' : '1024x768',
+        //     'browserstack.local': true
+        // },
+        // {
+        //     'name': 'IE-11',
+        //     'browserName' : 'IE',
+        //     'browser_version' : '11.0',
+        //     'os' : 'Windows',
+        //     'os_version' : '10',
+        //     'resolution' : '1024x768',
+        //     'browserstack.local': true
+        // },
+        // {
+        //     'name': 'Edge-LastVersion',
+        //     'browserName' : 'Edge', // last version
+        //     'os' : 'Windows',
+        //     'os_version' : '10',
+        //     'resolution' : '1024x768',
+        //     'browserstack.local': true
+        // },
+        {
+            'name': 'Firefox-LastVersion',
+            'browserName' : 'Firefox', // last version
+            'os' : 'Windows',
+            'os_version' : '10',
+            'resolution' : '1024x768',
+            'browserstack.local': true
+        },
+        // {
+        //     'name': 'Chrome-LastVersion',
+        //     'browserName' : 'Chrome', // last version
+        //     'os' : 'Windows',
+        //     'os_version' : '10',
+        //     'resolution' : '1024x768',
+        //     'browserstack.local': true
+        // },
+        // {
+        //     'name': 'Safari-LastVersion',
+        //     'browserName' : 'Safari', // last version
+        //     'os' : 'OS X',
+        //     'os_version' : 'Sierra',
+        //     'resolution' : '1024x768',
+        //     'browserstack.local': true
+        // }
+    ];
+}
+
+/*
+ * Methods
+ * -----------------------------------------------------------------------------
+ */
 
 function getScreenshotName(basePath) {
     return function(context) {
@@ -19,6 +135,11 @@ function getScreenshotName(basePath) {
     };
 }
 
+/*
+ * Global config
+ * -----------------------------------------------------------------------------
+ */
+
 exports.config = {
 
     //
@@ -29,11 +150,11 @@ exports.config = {
     // should work too though). These services define specific user and key (or access key)
     // values you need to put in here in order to connect to these services.
     //
-    host: 'hub.browserstack.com',
-    port: 80,
-    user: process.env.BROWSERSTACK_USERNAME,
-    key: process.env.BROWSERSTACK_ACCESS_KEY,
-    browserstackLocal: true,
+    host: host,
+    port: port,
+    user: user,
+    key: key,
+    browserstackLocal: browserstackLocal,
 
 
     //
@@ -78,57 +199,7 @@ exports.config = {
     commonCapabilities: {
         build: 'FO Tester'
     },
-    capabilities: [
-        // {
-        //     'name': 'IE-10',
-        //     'browserName' : 'IE',
-        //     'browser_version' : '10.0',
-        //     'os' : 'Windows',
-        //     'os_version' : '8',
-        //     'resolution' : '1024x768',
-        //     'browserstack.local': true
-        // },
-        // {
-        //     'name': 'IE-11',
-        //     'browserName' : 'IE',
-        //     'browser_version' : '11.0',
-        //     'os' : 'Windows',
-        //     'os_version' : '10',
-        //     'resolution' : '1024x768',
-        //     'browserstack.local': true
-        // },
-        // {
-        //     'name': 'Edge-LastVersion',
-        //     'browserName' : 'Edge', // last version
-        //     'os' : 'Windows',
-        //     'os_version' : '10',
-        //     'resolution' : '1024x768',
-        //     'browserstack.local': true
-        // },
-        {
-            'name': 'Firefox-LastVersion',
-            'browserName' : 'Firefox', // last version
-            'os' : 'Windows',
-            'os_version' : '10',
-            'resolution' : '1024x768',
-            'browserstack.local': true
-        },
-        // {
-        //     'name': 'Chrome-LastVersion',
-        //     'browserName' : 'Chrome', // last version
-        //     'os' : 'Windows',
-        //     'os_version' : '10',
-        //     'resolution' : '1024x768',
-        //     'browserstack.local': true
-        // },
-        {
-            'name': 'Safari-LastVersion',
-            'browserName' : 'Safari', // last version
-            'os' : 'OS X',
-            'os_version' : 'Sierra',
-            'resolution' : '1024x768',
-            'browserstack.local': true
-        }],
+    capabilities: browsers,
     //
     // ===================
     // Test Configurations
@@ -189,10 +260,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: [
-        'visual-regression',
-        'browserstack'
-    ],
+    services: services,
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: http://webdriver.io/guide/testrunner/frameworks.html
@@ -307,6 +375,11 @@ exports.config = {
     // onComplete: function(exitCode) {
     // }
 };
+
+/*
+ * Global config modifs
+ * -----------------------------------------------------------------------------
+ */
 
 exports.config.capabilities.forEach(function(caps){
     for(var i in exports.config.commonCapabilities) caps[i] = caps[i] || exports.config.commonCapabilities[i];
