@@ -86,10 +86,14 @@ describe('Technical', () => {
         }).then((messages) => {
             let countErrors = 0;
             messages.forEach((msg) => {
-                logMessage += '\n' + msg.type + ' (' + msg.lastLine + ')' + ': ' + msg.message;
-                if (msg.type === 'error') {
-                    countErrors++;
+                // Due to an error on Browserstack (the getSource method does not return the doctype, we remove this error
+                if (!msg.message.match('doctype')) {
+                    logMessage += '\n' + msg.type + ' (' + msg.lastLine + ')' + ': ' + msg.message;
+                    if (msg.type === 'error') {
+                        countErrors++;
+                    }
                 }
+
             });
             since(logMessage).expect(countErrors).toBe(0);
         });
