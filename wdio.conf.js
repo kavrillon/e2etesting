@@ -66,15 +66,15 @@ else {
     browserstackLocal = true;
     services.push('browserstack');
     browsers = [
-        // {
-        //     'name': 'IE-10',
-        //     'browserName' : 'IE',
-        //     'browser_version' : '10.0',
-        //     'os' : 'Windows',
-        //     'os_version' : '8',
-        //     'resolution' : '1024x768',
-        //     'browserstack.local': true
-        // },
+        {
+            'name': 'IE-10',
+            'browserName' : 'IE',
+            'browser_version' : '10.0',
+            'os' : 'Windows',
+            'os_version' : '8',
+            'resolution' : '1024x768',
+            'browserstack.local': true
+        },
         // {
         //     'name': 'IE-11',
         //     'browserName' : 'IE',
@@ -284,9 +284,10 @@ exports.config = {
         // or website depending on the result. For example, it is pretty handy to take a screenshot every time
         // an assertion fails.
         expectationResultHandler: function(passed, assertion) {
-            // if(passed) {
-            //     return;
-            // }
+            if(passed) {
+                return;
+            }
+            // console.log(assertion);
             // browser.saveScreenshot('assertionError_' + assertion.error.message + '.png');
         }
     },

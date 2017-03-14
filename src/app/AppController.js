@@ -6,10 +6,10 @@ export default class AppController extends Controller {
         super();
 
         // Controller vars
-        this.defaultAppTitle = document.querySelector('[js-title]').innerHTML;
+        this.defaultAppTitle = document.querySelector('[data-js-title]').innerHTML;
 
         // DOM vars
-        this.appTitle = document.querySelector('[js-title]');
+        this.appTitle = document.querySelector('[data-js-title]');
 
         // Init calls
         this.bindEvents();
