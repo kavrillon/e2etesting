@@ -5,6 +5,7 @@
 
 var path = require('path');
 var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
+var pages = require('./config/pages');
 
 /*
  * Script parameters
@@ -65,58 +66,7 @@ else {
     key = browserStackAccessKey;
     browserstackLocal = true;
     services.push('browserstack');
-    browsers = [
-        {
-            'name': 'IE-10',
-            'browserName' : 'IE',
-            'browser_version' : '10.0',
-            'os' : 'Windows',
-            'os_version' : '8',
-            'resolution' : '1024x768',
-            'browserstack.local': true
-        },
-        // {
-        //     'name': 'IE-11',
-        //     'browserName' : 'IE',
-        //     'browser_version' : '11.0',
-        //     'os' : 'Windows',
-        //     'os_version' : '10',
-        //     'resolution' : '1024x768',
-        //     'browserstack.local': true
-        // },
-        // {
-        //     'name': 'Edge-LastVersion',
-        //     'browserName' : 'Edge', // last version
-        //     'os' : 'Windows',
-        //     'os_version' : '10',
-        //     'resolution' : '1024x768',
-        //     'browserstack.local': true
-        // },
-        {
-            'name': 'Firefox-LastVersion',
-            'browserName' : 'Firefox', // last version
-            'os' : 'Windows',
-            'os_version' : '10',
-            'resolution' : '1024x768',
-            'browserstack.local': true
-        },
-        // {
-        //     'name': 'Chrome-LastVersion',
-        //     'browserName' : 'Chrome', // last version
-        //     'os' : 'Windows',
-        //     'os_version' : '10',
-        //     'resolution' : '1024x768',
-        //     'browserstack.local': true
-        // },
-        // {
-        //     'name': 'Safari-LastVersion',
-        //     'browserName' : 'Safari', // last version
-        //     'os' : 'OS X',
-        //     'os_version' : 'Sierra',
-        //     'resolution' : '1024x768',
-        //     'browserstack.local': true
-        // }
-    ];
+    browsers = require('./config/browsers');
 }
 
 /*
@@ -124,13 +74,25 @@ else {
  * -----------------------------------------------------------------------------
  */
 
+function getPageNumberFromUrl(url) {
+    url = url.replace(pages.baseUrl, '');
+
+    for (var i=0; i<pages.list.length; i++) {
+        if (pages.list[i].url === url) {
+            return pages.list[i].name;
+        }
+    }
+    return 'unknown';
+}
+
 function getScreenshotName(basePath) {
     return function(context) {
         // var type = context.type;
+        var page = getPageNumberFromUrl(context.meta.url);
         var testName = context.meta.element === undefined ? 'body' : context.meta.element;
         var browserVersion = parseInt(context.browser.version, 10);
         var browserName = context.browser.name;
-        var title = testName + '_' + browserName + '_v' + browserVersion + '.png';
+        var title = page + '_' + testName + '_' + browserName + '_v' + browserVersion + '.png';
         return path.join(basePath, title);
     };
 }
@@ -226,7 +188,7 @@ exports.config = {
     //
     // Set a base URL in order to shorten url command calls. If your url parameter starts
     // with "/", then the base url gets prepended.
-    baseUrl: 'http://localhost:8080',
+    baseUrl: pages.baseUrl,
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,

@@ -17,7 +17,10 @@ export default class AppController extends Controller {
     }
 
     init() {
-
+        if (window.location.href.match(/\?demo/)) {
+            document.querySelector('title').remove();
+            document.querySelector('.content').innerHTML = '<div class="content--demo">DEMO ERROR</div>';
+        }
     }
 
     bindEvents() {
