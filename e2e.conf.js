@@ -351,14 +351,3 @@ exports.config.capabilities.forEach(function(caps){
 exports.config.capabilities.forEach(function(caps){
     caps.name = datetime + '_' + caps.name;
 });
-
-
-
-
-
-
-
-
-
-
-
