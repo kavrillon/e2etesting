@@ -129,7 +129,7 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './test/specs/**/*.js'
+        './test/specs/e2e.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -246,9 +246,9 @@ exports.config = {
         // or website depending on the result. For example, it is pretty handy to take a screenshot every time
         // an assertion fails.
         expectationResultHandler: function(passed, assertion) {
-            if(passed) {
-                return;
-            }
+            // if(passed) {
+            //     return;
+            // }
             // console.log(assertion);
             // browser.saveScreenshot('assertionError_' + assertion.error.message + '.png');
         }
@@ -348,6 +348,65 @@ exports.config.capabilities.forEach(function(caps){
     for(var i in exports.config.commonCapabilities) caps[i] = caps[i] || exports.config.commonCapabilities[i];
 });
 
+exports.config.capabilities.forEach(function(caps){
+    caps.name = datetime + '_' + caps.name;
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+host = '0.0.0.0';
+port = 4444;
+browsers = [{browserName: 'phantomjs'}];
+
+exports.config = {
+    host: host,
+    port: port,
+    specs: [
+        './test/specs/tech.js'
+    ],
+    maxInstances: 10,
+    commonCapabilities: {
+        build: 'FO Checker'
+    },
+    capabilities: browsers,
+    sync: true,
+    logLevel: 'silent',
+    coloredLogs: true,
+    bail: 0,
+    screenshotPath: './errorShots/',
+    baseUrl: pages.baseUrl,
+    waitforTimeout: 10000,
+    connectionRetryTimeout: 90000,
+    connectionRetryCount: 3,
+    framework: 'jasmine',
+    reporters: ['spec'],
+    jasmineNodeOpts: {
+        defaultTimeoutInterval: 60000
+    },
+    before: function () {
+        require('babel-register');
+    },
+};
+exports.config.capabilities.forEach(function(caps){
+    for(var i in exports.config.commonCapabilities) caps[i] = caps[i] || exports.config.commonCapabilities[i];
+});
 exports.config.capabilities.forEach(function(caps){
     caps.name = datetime + '_' + caps.name;
 });

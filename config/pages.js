@@ -3,7 +3,6 @@ var pages = {
     list: [
         { name: 'home', url: '/' },
         { name: 'demo', url: '/?demo' }
-
     ]
 };
 
