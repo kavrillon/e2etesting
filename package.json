@@ -1,7 +1,7 @@
 {
-    "name": "fo-tester",
+    "name": "fo-checker",
     "version": "1.0.17",
-    "description": "Frontend Tester (tech/e2e/visual)",
+    "description": "Frontend Checker (tech/e2e/visual)",
     "main": "src/index.html",
     "scripts": {
         "test": "./node_modules/.bin/wdio wdio.conf.js",
@@ -9,14 +9,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/kavrillon/fo-tester.git"
+        "url": "https://github.com/kavrillon/fo-checker.git"
     },
     "author": "Kevin Avrillon",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/kavrillon/fo-tester/issues"
+        "url": "https://github.com/kavrillon/fo-checker/issues"
     },
-    "homepage": "https://github.com/kavrillon/fo-tester#readme",
+    "homepage": "https://github.com/kavrillon/fo-checker#readme",
     "devDependencies": {
         "babel": "^6.23.0",
         "babel-core": "^6.23.1",

@@ -159,7 +159,7 @@ exports.config = {
     // https://www.browserstack.com/automate/node
     //
     commonCapabilities: {
-        build: 'FO Tester'
+        build: 'FO Checker'
     },
     capabilities: browsers,
     //
