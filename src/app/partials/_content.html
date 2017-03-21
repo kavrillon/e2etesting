@@ -11,15 +11,23 @@
         </div>
 
         <div class="content__doc__step">
+            For technical tests, PhantomJS is used, with a standalone Selenium server (available here: <a href="http://selenium-release.storage.googleapis.com/index.html">http://selenium-release.storage.googleapis.com/index.html</a>)
+            <div class="content__doc__step__cmd">
+                <div>java -jar selenium-server-standalone-X.XX.X.jar</div>
+            </div>
+        </div>
+
+        <div class="content__doc__step">
+            For e2e tests, you can use PhantomJS or Browserstack.<br /> <br />
+            To use PhantomJS, set this value:
+            <div class="content__doc__step__cmd">
+                <div>export HEADLESS_PHANTOM=true</div>
+            </div>
             If you want to use Browsterstack, configure your informations: (available here: <a href="https://www.browserstack.com/accounts/settings">https://www.browserstack.com/accounts/settings</a>)
             <div class="content__doc__step__cmd">
                 <div>export BROWSERSTACK_USERNAME=YOUR_USERNAME</div>
                 <div>export BROWSERSTACK_ACCESS_KEY=YOUR_KEY</div>
-            </div>
-            Or use PhantomJS with a standalone Selenium server (available here: <a href="http://selenium-release.storage.googleapis.com/index.html">http://selenium-release.storage.googleapis.com/index.html</a>)
-            <div class="content__doc__step__cmd">
-                <div>java -jar selenium-server-standalone-X.XX.X.jar</div>
-                <div>export HEADLESS_PHANTOM=true</div>
+                <div>export HEADLESS_PHANTOM=false</div>
             </div>
         </div>
 
@@ -39,10 +47,10 @@
 
         <h3>Configuration</h3>
         <div class="content__doc__step">
-            Change the tested URL: go in the e2e.conf.js and edit the baseUrl property.
+            Change the tested URLs: go in the config/pages.js file and edit the baseUrl property, and the list of URLs to test.
         </div>
         <div class="content__doc__step">
-            Change the browser list: Go in the e2e.conf.js and edit the capabilities property.
+            Change the browser list: Go in the config/browsers.js file and edit the browsers property (for Browserstack only).
         </div>
 
         <h3>Tests done</h3>
@@ -52,6 +60,7 @@
                 <li>title & description not empty</li>
                 <li>Only one &lt;h1&gt;</li>
                 <li>No heading is hidden</li>
+                <li>No heading is empty</li>
                 <li>No break in the heading hierarchy</li>
                 <li>No W3C error</li>
             </ul>
@@ -64,9 +73,6 @@
         </div>
 
         <h3>TODO</h3>
-        <div class="content__doc__step">
-            Test empty title
-        </div>
         <div class="content__doc__step">
             A11Y
         </div>
