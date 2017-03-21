@@ -27,26 +27,38 @@ pages.list.forEach((page) => {
         });
 
         it('should have no hidden heading (h levels)', () => {
-            const displays = browser.getCssProperty('h1,h2,h3,h4,h5,h6', 'display');
-            const visibilities = browser.getCssProperty('h1,h2,h3,h4,h5,h6', 'visibility');
-            const opacities = browser.getCssProperty('h1,h2,h3,h4,h5,h6', 'opacity');
+            let displays = browser.getCssProperty('h1,h2,h3,h4,h5,h6', 'display');
+            let visibilities = browser.getCssProperty('h1,h2,h3,h4,h5,h6', 'visibility');
+            let opacities = browser.getCssProperty('h1,h2,h3,h4,h5,h6', 'opacity');
             let isHiddenTitle = false;
 
-            if (displays.length > 0) {
+            if (displays) {
+                if (!Array.isArray(displays)) {
+                    displays = [displays];
+                }
+
                 displays.forEach((elt) => {
                     if (elt.value === 'none') {
                         isHiddenTitle = true;
                     }
                 });
             }
-            if (visibilities.length > 0) {
+            if (visibilities) {
+                if (!Array.isArray(visibilities)) {
+                    visibilities = [visibilities];
+                }
+
                 visibilities.forEach((elt) => {
                     if (elt.value === 'hidden') {
                         isHiddenTitle = true;
                     }
                 });
             }
-            if (opacities.length > 0) {
+            if (opacities) {
+                if (!Array.isArray(opacities)) {
+                    opacities = [opacities];
+                }
+
                 opacities.forEach((elt) => {
                     if (elt.value === 0) {
                         isHiddenTitle = true;
@@ -57,13 +69,36 @@ pages.list.forEach((page) => {
             expect(isHiddenTitle).toBe(false);
         });
 
-        it('should have no hierarchy break in headings (h levels)', () => {
+        it('should have no empty heading', () => {
+            let texts = browser.getText('h1,h2,h3,h4,h5,h6');
+            let isEmpty = false;
+
+            if (texts) {
+                if (!Array.isArray(texts)) {
+                    texts = [texts];
+                }
+
+                texts.forEach((elt) => {
+                    if (elt.trim() === '') {
+                        isEmpty = true;
+                    }
+                });
+            }
+
+            expect(isEmpty).toBe(false);
+        });
+
+        it('should have no hierarchy break in headings', () => {
             let isValid = true;
             let logMessage = '';
             let headings = browser.getTagName('h1,h2,h3,h4,h5,h6');
             let level = 0;
 
-            if (headings && headings.length > 0) {
+            if (headings) {
+                if (!Array.isArray(headings)) {
+                    headings = [headings];
+                }
+
                 headings.forEach((elt) => {
                     const match = elt.match(/[0-9]/);
                     if (match) {
