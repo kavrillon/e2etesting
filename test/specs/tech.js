@@ -63,7 +63,7 @@ pages.list.forEach((page) => {
             let headings = browser.getTagName('h1,h2,h3,h4,h5,h6');
             let level = 0;
 
-            if (headings.length > 0) {
+            if (headings && headings.length > 0) {
                 headings.forEach((elt) => {
                     const match = elt.match(/[0-9]/);
                     if (match) {
