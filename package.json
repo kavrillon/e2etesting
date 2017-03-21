@@ -4,7 +4,7 @@
     "description": "Frontend Checker (tech/e2e/visual)",
     "main": "src/index.html",
     "scripts": {
-        "test": "./node_modules/.bin/wdio wdio.conf.js",
+        "test": "./node_modules/.bin/wdio tech.conf.js & ./node_modules/.bin/wdio e2e.conf.js",
         "test:validate": "rm -rf screenshots/baseline && mv screenshots/current screenshots/baseline"
     },
     "repository": {
