@@ -1,83 +1,106 @@
 <div class="content">
-    <h2>Tool for e2e & visual regression</h2>
     <div class="content__doc">
-        <h3>Installation</h3>
+        <div class="content__doc__block">
+            <h2>Installation</h2>
 
-        <div class="content__doc__step">
-            Clone the repo and go in the root folder, then:
-            <div class="content__doc__step__cmd">
-                npm install
+            <div class="content__doc__block__step">
+                Clone the repo and go in the root folder, then:
+                <div class="content__doc__block__step__cmd">
+                    npm install
+                </div>
+            </div>
+
+            <div class="content__doc__block__step">
+                For technical tests, PhantomJS is used, with a standalone Selenium server (available here: <a href="http://selenium-release.storage.googleapis.com/index.html">http://selenium-release.storage.googleapis.com/index.html</a>)
+                <br />Please download the version you want and run the server with:
+                <div class="content__doc__block__step__cmd">
+                    <div>java -jar selenium-server-standalone-X.XX.X.jar</div>
+                </div>
+            </div>
+
+            <div class="content__doc__block__step">
+                For e2e tests, you can use PhantomJS or Browserstack via the API.
+                <br /><br />To use PhantomJS, set this value:
+                <div class="content__doc__block__step__cmd">
+                    <div>export HEADLESS_PHANTOM=true</div>
+                </div>
+                If you want to use Browsterstack, configure your informations: (available here: <a href="https://www.browserstack.com/accounts/settings">https://www.browserstack.com/accounts/settings</a>)
+                <div class="content__doc__block__step__cmd">
+                    <div>export BROWSERSTACK_USERNAME=YOUR_USERNAME</div>
+                    <div>export BROWSERSTACK_ACCESS_KEY=YOUR_KEY</div>
+                    <div>export HEADLESS_PHANTOM=false</div>
+                </div>
             </div>
         </div>
 
-        <div class="content__doc__step">
-            For technical tests, PhantomJS is used, with a standalone Selenium server (available here: <a href="http://selenium-release.storage.googleapis.com/index.html">http://selenium-release.storage.googleapis.com/index.html</a>)
-            <div class="content__doc__step__cmd">
-                <div>java -jar selenium-server-standalone-X.XX.X.jar</div>
+
+        <div class="content__doc__block">
+            <h2>Configuration</h2>
+            <div class="content__doc__block__step">
+                Configure the URLs to test: edit the baseUrl property, and the list of URLs here:
+                <div class="content__doc__block__step__cmd">
+                    config/pages.js
+                </div>
+            </div>
+            <div class="content__doc__block__step">
+                Configure the browsers list for e2e tests (for Browsterstack only): edit the browsers object here:
+                <div class="content__doc__block__step__cmd">
+                    config/browsers.js
+                </div>
             </div>
         </div>
 
-        <div class="content__doc__step">
-            For e2e tests, you can use PhantomJS or Browserstack.<br /> <br />
-            To use PhantomJS, set this value:
-            <div class="content__doc__step__cmd">
-                <div>export HEADLESS_PHANTOM=true</div>
+        <div class="content__doc__block">
+            <h2>Use</h2>
+            <div class="content__doc__block__step">
+                <div class="content__doc__block__step__cmd">
+                    npm run test
+                </div>
+                Or for tech tests only:
+                <div class="content__doc__block__step__cmd">
+                    npm run test:tech
+                </div>
+                And for tech e2e tests only
+                <div class="content__doc__block__step__cmd">
+                    npm run test:e2e
+                </div>
             </div>
-            If you want to use Browsterstack, configure your informations: (available here: <a href="https://www.browserstack.com/accounts/settings">https://www.browserstack.com/accounts/settings</a>)
-            <div class="content__doc__step__cmd">
-                <div>export BROWSERSTACK_USERNAME=YOUR_USERNAME</div>
-                <div>export BROWSERSTACK_ACCESS_KEY=YOUR_KEY</div>
-                <div>export HEADLESS_PHANTOM=false</div>
-            </div>
-        </div>
-
-        <div class="content__doc__step">
-            And run:
-            <div class="content__doc__step__cmd">
-                npm run test
-            </div>
-        </div>
-
-        <div class="content__doc__step">
-            If visual diff fails, you'll have to review each screenshot in screenshots/diff & screenshots/current and validate that it's ok. If it's ok, run:
-            <div class="content__doc__step__cmd">
-                npm run test:validate
+            <div class="content__doc__block__step">
+                If visual diff fails, you'll have to review each screenshot in screenshots/diff & screenshots/current and validate that it's ok. If it's ok, run:
+                <div class="content__doc__block__step__cmd">
+                    npm run test:validate
+                </div>
             </div>
         </div>
 
-        <h3>Configuration</h3>
-        <div class="content__doc__step">
-            Change the tested URLs: go in the config/pages.js file and edit the baseUrl property, and the list of URLs to test.
-        </div>
-        <div class="content__doc__step">
-            Change the browser list: Go in the config/browsers.js file and edit the browsers property (for Browserstack only).
+        <div class="content__doc__block">
+            <h2>Tests done</h2>
+            <div class="content__doc__block__step">
+                <h3>Technical</h3>
+                <ul>
+                    <li>title & description not empty</li>
+                    <li>Only one &lt;h1&gt;</li>
+                    <li>No heading is hidden</li>
+                    <li>No heading is empty</li>
+                    <li>No break in the heading hierarchy</li>
+                    <li>No W3C error</li>
+                </ul>
+            </div>
+            <div class="content__doc__block__step">
+                <h3>Visual regressions</h3>
+                <ul>
+                    <li>No visual diff with the previous validated screenshot</li>
+                </ul>
+            </div>
         </div>
 
-        <h3>Tests done</h3>
-        <div class="content__doc__step">
-            <h4>Technical</h4>
+        <div class="content__doc__block">
+            <h2>Improvements</h2>
             <ul>
-                <li>title & description not empty</li>
-                <li>Only one &lt;h1&gt;</li>
-                <li>No heading is hidden</li>
-                <li>No heading is empty</li>
-                <li>No break in the heading hierarchy</li>
-                <li>No W3C error</li>
+                <li>A11Y tech tests</li>
+                <li>Microdata tech tests</li>
+                <li>IE Fix: replace fixed items by absolute one ?</li>
             </ul>
-        </div>
-        <div class="content__doc__step">
-            <h4>Visual regressions</h4>
-            <ul>
-                <li>No visual diff with the previous validated screenshot</li>
-            </ul>
-        </div>
-
-        <h3>TODO</h3>
-        <div class="content__doc__step">
-            A11Y
-        </div>
-        <div class="content__doc__step">
-            Microdata
         </div>
     </div>
 </div>
