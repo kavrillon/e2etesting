@@ -6,6 +6,7 @@
 var path = require('path');
 var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
 var pages = require('./../config/pages');
+var FOCheckerReporter = require('./FOCheckerReporter');
 
 /*
  * Script parameters
@@ -234,7 +235,7 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: http://webdriver.io/guide/testrunner/reporters.html
-    reporters: ['spec'],
+    reporters: [FOCheckerReporter],
     //
     // Options to be passed to Jasmine.
     jasmineNodeOpts: {

@@ -120,7 +120,7 @@ pages.list.forEach((page) => {
             since(logMessage).expect(isValid).toBe(true);
         });
 
-        it('should have no w3c errors', () => {
+        it('should have no W3C errors', () => {
             const html = browser.getSource();
             let logMessage = '';
 
@@ -136,7 +136,7 @@ pages.list.forEach((page) => {
                 messages.forEach((msg) => {
                     // Due to an error on Browserstack (the getSource method does not return the doctype, we remove this error
                     if (!msg.message.match('doctype')) {
-                        logMessage += `\n=> ${msg.type} (${msg.lastLine}): ${msg.message}`;
+                        logMessage += `|||${msg.type} (${msg.lastLine}): ${msg.message}`;
                         if (msg.type === 'error') {
                             countErrors++;
                         }
@@ -147,11 +147,11 @@ pages.list.forEach((page) => {
             });
         });
 
-        it('should have no a11y errors', () => {
+        it('should have no A11Y errors', () => {
             const test = pa11y({
                 ignore: [
                     'notice',
-                    'warning',
+                    // 'warning',
                     // 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail'
                 ]
             });
@@ -170,7 +170,7 @@ pages.list.forEach((page) => {
             }).then((results) => {
                 if (results) {
                     results.forEach((msg) => {
-                        logMessage += `\n=> ${msg.type}: ${msg.message}\nContext: (${msg.selector}): ${msg.context}\n`;
+                        logMessage += `|||${msg.type} (${msg.selector}): ${msg.message}`;
                         if (msg.type === 'error') {
                             countErrors++;
                         }
@@ -180,5 +180,6 @@ pages.list.forEach((page) => {
                 since(logMessage).expect(countErrors).toBe(0);
             });
         });
+
     });
 });
