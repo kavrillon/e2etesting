@@ -1,6 +1,6 @@
 {
     "name": "fo-checker",
-    "version": "1.0.18",
+    "version": "1.0.19",
     "description": "Frontend Checker (tech/e2e/visual)",
     "main": "src/index.html",
     "scripts": {
