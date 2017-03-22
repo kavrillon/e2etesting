@@ -10,8 +10,8 @@ $globals-blue: #36a2eb;
 $globals-yellow: #ffce56;
 $globals-green: #44d279;
 $globals-color: #004698; //#2f3ba2; //201929 //3a3248
-$globals-link-color: $globals-red;
-$globals-link-hover-color: darken($globals-red, 15%);
+$globals-link-color: darken($globals-red, 25%);
+$globals-link-hover-color: darken($globals-red, 50%);
 
 $globals-bg: #fff;
 $globals-transparency: rgba($black, .22);

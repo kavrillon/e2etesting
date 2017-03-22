@@ -4,18 +4,7 @@
  */
 
 var path = require('path');
-var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
-var pages = require('./config/pages');
-
-/*
- * Script parameters
- * -----------------------------------------------------------------------------
- */
-
-var phantom = process.env.HEADLESS_PHANTOM == 'true' || false;
-
-var browserStackUsername = process.env.BROWSERSTACK_USERNAME;
-var browserStackAccessKey = process.env.BROWSERSTACK_ACCESS_KEY;
+var pages = require('./../config/pages');
 
 /*
  * Variables
@@ -31,71 +20,10 @@ var datetime = currentdate.getFullYear() + '/'
     + currentdate.getSeconds();
 
 
-var browsers = [];
-var user, key;
 var host = '0.0.0.0';
 var port = 4444;
-var browserstackLocal = false;
-var services = ['visual-regression'];
+var browsers = [{browserName: 'phantomjs'}];
 
-/*
- * Check Browserstack username & access key (if not in PhantomJS mode)
- * -----------------------------------------------------------------------------
- */
-
-if (!phantom && process.env.BROWSERSTACK_USERNAME == null) {
-    throw 'You need to set your BrowserStack username as BROWSERSTACK_USERNAME enviroment variable!';
-}
-
-if (!phantom && process.env.BROWSERSTACK_ACCESS_KEY == null) {
-    throw 'You need to set your BrowserStack access key as BROWSERSTACK_ACCESS_KEY enviroment variable!';
-}
-
-/*
- * Browsers Configuration
- * -----------------------------------------------------------------------------
- */
-
-if (phantom === true) {
-    browsers = [{browserName: 'phantomjs'}];
-}
-else {
-    host = 'hub.browserstack.com';
-    port = 80;
-    user = browserStackUsername;
-    key = browserStackAccessKey;
-    browserstackLocal = true;
-    services.push('browserstack');
-    browsers = require('./config/browsers');
-}
-
-/*
- * Methods
- * -----------------------------------------------------------------------------
- */
-
-function getPageNumberFromUrl(url) {
-    url = url.replace(pages.baseUrl, '');
-
-    for (var i=0; i<pages.list.length; i++) {
-        if (pages.list[i].url === url) {
-            return pages.list[i].name;
-        }
-    }
-    return 'unknown';
-}
-
-function getScreenshotName(basePath) {
-    return function(context) {
-        // var type = context.type;
-        var page = getPageNumberFromUrl(context.meta.url);
-        var testName = context.meta.element === undefined ? 'body' : context.meta.element;
-        var browserVersion = parseInt(context.browser.version, 10);
-        var browserName = context.browser.name;
-        var title = page + '_' + testName + '_' + browserName + '_v' + browserVersion + '.png';
-        return path.join(basePath, title);
-    };
-}
 
 /*
  * Global config
@@ -114,9 +42,6 @@ exports.config = {
     //
     host: host,
     port: port,
-    user: user,
-    key: key,
-    browserstackLocal: browserstackLocal,
 
 
     //
@@ -129,7 +54,7 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './test/specs/e2e.js'
+        './test/specs/tech.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -222,7 +147,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: services,
+    services: [],
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: http://webdriver.io/guide/testrunner/frameworks.html
@@ -252,18 +177,6 @@ exports.config = {
             // console.log(assertion);
             // browser.saveScreenshot('assertionError_' + assertion.error.message + '.png');
         }
-    },
-
-    visualRegression: {
-        compare: new VisualRegressionCompare.LocalCompare({
-            referenceName: getScreenshotName(path.join(process.cwd(), 'screenshots/baseline')),
-            screenshotName: getScreenshotName(path.join(process.cwd(), 'screenshots/current')),
-            diffName: getScreenshotName(path.join(process.cwd(), 'screenshots/diff')),
-            misMatchTolerance: 0.01,
-        }),
-        viewportChangePause: 300,
-        widths: [/*480, 768, 992, */1200],
-        orientations: ['landscape', 'portrait'],
     },
 
     //

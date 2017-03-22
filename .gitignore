@@ -10,3 +10,4 @@ dist
 local.log
 errorShots
 screenshots/current
+screenshots/diff

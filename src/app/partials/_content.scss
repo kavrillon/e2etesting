@@ -18,12 +18,12 @@
                 padding-bottom: 15px;
 
                 &:after {
-                    content: ' ';
-                    border-top: 1px solid rgba($globals-color, .2);
                     position: absolute;
                     bottom: -5px;
-                    width: 33%;
                     left: 0;
+                    border-top: 1px solid lighten($globals-color, 60%);
+                    width: 33%;
+                    content: ' ';
                 }
 
                 &:last-child {
@@ -33,10 +33,10 @@
                 }
 
                 &__cmd {
-                    border-radius: 2px;
                     margin: $globals-padding 0;
-                    border: 1px solid rgba($globals-color, .2);
-                    background: rgba($globals-color, .1);
+                    border: 1px solid lighten($globals-color, 50%);
+                    border-radius: 2px;
+                    background: lighten($globals-color, 65%);
                     padding: 5px 10px;
                 }
             }
@@ -46,7 +46,7 @@
     &--demo {
         margin-top: 100px;
         text-align: center;
-        font-weight: bold;
         font-size: 30px;
+        font-weight: bold;
     }
 }

@@ -58,21 +58,22 @@ a {
         color: $globals-link-hover-color;
 
         &:after {
-            right: 0;
+            transform: scale(1);
             opacity: 1;
         }
     }
 
     &:after {
         position: absolute;
-        bottom: -2px;
-        will-change: right, color, opacity;
-        right: 100%;
+        right: 0;
+        bottom: -3px;
         left: 0;
-        opacity: 0;
-        content: ' ';
+        transform: scale(0);
         transition: $globals-transition;
-        border-top: 1px solid $globals-link-color;
+        opacity: 0;
+        border-top: 1px solid;
+        content: ' ';
+        will-change: right, color, transform;
     }
 }
 
@@ -94,7 +95,7 @@ h6,
 }
 
 h2 {
-    border-bottom: 1px solid rgba($globals-color, .5);
+    border-bottom: 1px solid lighten($globals-color, 30%);
     padding: 0 0 $globals-padding;
     font-size: 1.7rem;
 }
