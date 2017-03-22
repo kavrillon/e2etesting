@@ -1,6 +1,8 @@
-var w3cjs = require('w3cjs');
 require('jasmine2-custom-message');
-var pages = require('../../config/pages');
+
+const w3cjs = require('w3cjs');
+const pa11y = require('pa11y');
+const pages = require('../../config/pages');
 const baseUrl = pages.baseUrl;
 
 
@@ -134,13 +136,47 @@ pages.list.forEach((page) => {
                 messages.forEach((msg) => {
                     // Due to an error on Browserstack (the getSource method does not return the doctype, we remove this error
                     if (!msg.message.match('doctype')) {
-                        logMessage += '\n' + msg.type + ' (' + msg.lastLine + ')' + ': ' + msg.message;
+                        logMessage += `\n=> ${msg.type} (${msg.lastLine}): ${msg.message}`;
                         if (msg.type === 'error') {
                             countErrors++;
                         }
                     }
 
                 });
+                since(logMessage).expect(countErrors).toBe(0);
+            });
+        });
+
+        it('should have no a11y errors', () => {
+            const test = pa11y({
+                ignore: [
+                    'notice',
+                    'warning',
+                    // 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail'
+                ]
+            });
+            let countErrors = 0;
+            let logMessage = '';
+
+            return new Promise((resolve, reject) => {
+                test.run(baseUrl + page.url, (error, results) => {
+                    if (error) {
+                        reject(error);
+                    }
+                    else {
+                        resolve(results);
+                    }
+                });
+            }).then((results) => {
+                if (results) {
+                    results.forEach((msg) => {
+                        logMessage += `\n=> ${msg.type}: ${msg.message}\nContext: (${msg.selector}): ${msg.context}\n`;
+                        if (msg.type === 'error') {
+                            countErrors++;
+                        }
+                    });
+                }
+
                 since(logMessage).expect(countErrors).toBe(0);
             });
         });
