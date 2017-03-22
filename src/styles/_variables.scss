@@ -9,7 +9,7 @@ $globals-red: #ff6384;
 $globals-blue: #36a2eb;
 $globals-yellow: #ffce56;
 $globals-green: #44d279;
-$globals-color: #004698; //#2f3ba2; //201929 //3a3248
+$globals-color: #273547; //#2f3ba2; //201929 //3a3248
 $globals-link-color: darken($globals-red, 25%);
 $globals-link-hover-color: darken($globals-red, 50%);
 
@@ -29,12 +29,9 @@ $screen-md: 992px;
 $screen-lg: 1200px;
 
 // HEADER
-$header-height: 56px;
+$header-height: 60px;
 $header-bg: $globals-color;
 $header-color: $white;
 $header-zindex: 10;
 $header-transition: opacity .333s cubic-bezier(0, 0, .21, 1);
-$header-shadow-1: rgba($black, .14);
-$header-shadow-2: rgba($black, .12);
-$header-shadow-3: rgba($black, .2);
-$header-shadow: 0 4px 5px 0 $header-shadow-1, 0 2px 9px 1px $header-shadow-2, 0 4px 2px -2px $header-shadow-3;
+$header-shadow: none;
