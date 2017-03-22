@@ -15,7 +15,7 @@ pages.list.forEach((page) => {
         });
 
         it('should be the same body', () => {
-            browser.pause(1000);
+            browser.pause(3000);
             expect(browser.checkDocument()[0].isWithinMisMatchTolerance).toBe(true);
         });
     });
