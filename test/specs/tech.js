@@ -136,8 +136,8 @@ pages.list.forEach((page) => {
                 messages.forEach((msg) => {
                     // Due to an error on Browserstack (the getSource method does not return the doctype, we remove this error
                     if (!msg.message.match('doctype')) {
-                        logMessage += `|||${msg.type} (${msg.lastLine}): ${msg.message}`;
                         if (msg.type === 'error') {
+                            logMessage += `|||${msg.type} (${msg.lastLine}): ${msg.message}`;
                             countErrors++;
                         }
                     }
@@ -151,7 +151,7 @@ pages.list.forEach((page) => {
             const test = pa11y({
                 ignore: [
                     'notice',
-                    // 'warning',
+                    'warning',
                     // 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail'
                 ]
             });

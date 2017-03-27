@@ -258,16 +258,23 @@ var FOCheckerReporter = function(baseReporter, config) {
             var title = typeof test.parent !== 'undefined' ? test.parent + ' ' + test.title : test.title;
             output += preface.trim() + '\n';
 
-            output += preface + ' ------------------------------------------------\n';
-            output += preface + ' ' + _this.baseReporter.color('error title', i + 1 + ') ' + title + ':') + '\n';
-
+            var count = 0;
+            var buffer = '';
             messages.forEach(function(msg) {
                 msg = msg.trim().replace('\n', _this.baseReporter.color('', '\n' + preface + ' '));
                 if (msg !== '') {
+                    count++;
                     var color = msg.indexOf('warning') == 0 || msg.indexOf('info') == 0 ? 'pending' : 'fail';
-                    output += preface + ' ' + _this.baseReporter.color(color, msg) + '\n';
+                    buffer += preface + ' ' + _this.baseReporter.color(color, msg) + '\n';
                 }
             });
+
+            output += preface + ' ------------------------------------------------\n';
+            output += preface + ' ' + _this.baseReporter.color('error title', i + 1 + ') ' + title + ':') + '\n';
+            output += preface + ' ' + _this.baseReporter.color('fail', count + ' error(s)') + '\n';
+            output += preface.trim() + '\n';
+
+            output += buffer;
         });
 
         return output;
