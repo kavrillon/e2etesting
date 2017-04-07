@@ -252,9 +252,11 @@ var FOCheckerReporter = function(baseReporter, config) {
         var _this = this;
 
         var output = '';
+        var lineSeparator = '|||';
+        var infoSeparator = '###';
 
         failures.forEach(function (test, i) {
-            var messages = test.err.message.split('|||');
+            var messages = test.err.message.split(lineSeparator);
             var title = typeof test.parent !== 'undefined' ? test.parent + ' ' + test.title : test.title;
             output += preface.trim() + '\n';
 
@@ -262,10 +264,25 @@ var FOCheckerReporter = function(baseReporter, config) {
             var buffer = '';
             messages.forEach(function(msg) {
                 msg = msg.trim().replace('\n', _this.baseReporter.color('', '\n' + preface + ' '));
+
+                var infos = null;
+                if (msg.indexOf(infoSeparator) > -1) {
+                    infos = msg.split(infoSeparator);
+                    msg = msg.split(infoSeparator)[0];
+                    infos.shift();
+                }
+
                 if (msg !== '') {
                     count++;
                     var color = msg.indexOf('warning') == 0 || msg.indexOf('info') == 0 ? 'pending' : 'fail';
                     buffer += preface + ' ' + _this.baseReporter.color(color, msg) + '\n';
+
+                    if (infos && infos.length > 0) {
+                        infos.forEach(function(i) {
+                            buffer += preface + ' ' + _this.baseReporter.color(color, i) + '\n';
+                        });
+                        buffer += preface + '\n';
+                    }
                 }
             });
 

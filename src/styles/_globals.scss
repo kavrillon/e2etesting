@@ -47,37 +47,6 @@ html {
     }
 }
 
-a {
-    position: relative;
-    text-decoration: none;
-    color: $globals-link-color;
-
-    &.active,
-    &:hover,
-    &:focus {
-        color: $globals-link-hover-color;
-
-        &:after {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
-    &:after {
-        position: absolute;
-        right: 0;
-        bottom: -3px;
-        left: 0;
-        transform: scale(0);
-        transition: $globals-transition;
-        opacity: 0;
-        border-top: 1px solid;
-        content: ' ';
-        will-change: right, color, transform;
-    }
-}
-
-
 h1,
 h2,
 h3,
