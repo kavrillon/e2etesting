@@ -42,4 +42,24 @@
             }
         }
     }
+
+    &__repo {
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
+
+        svg {
+            transition: $globals-transition;
+            fill: #fff;
+            width: 32px;
+            height: 32px;
+            transform-origin: center;
+
+            &:hover {
+                fill: #e3e9f0;
+                transform: scale(1.2);
+            }
+        }
+    }
 }
