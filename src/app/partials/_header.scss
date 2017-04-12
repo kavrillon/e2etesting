@@ -61,5 +61,9 @@
                 transform: scale(1.2);
             }
         }
+
+        &__title {
+            display: none;
+        }
     }
 }

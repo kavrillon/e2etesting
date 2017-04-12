@@ -4,9 +4,9 @@
     "description": "Frontend Checker (tech/e2e/visual)",
     "main": "src/index.html",
     "scripts": {
-        "test": "./node_modules/.bin/wdio test/tech.conf.js & ./node_modules/.bin/wdio test/e2e.conf.js",
+        "test": "rm -rf screenshots/current & rm -rf screenshots/diff & ./node_modules/.bin/wdio test/tech.conf.js & ./node_modules/.bin/wdio test/e2e.conf.js",
         "test:tech": "./node_modules/.bin/wdio test/tech.conf.js",
-        "test:e2e": "./node_modules/.bin/wdio test/e2e.conf.js",
+        "test:e2e": "rm -rf screenshots/current && rm -rf screenshots/diff && ./node_modules/.bin/wdio test/e2e.conf.js",
         "test:validate": "rm -rf screenshots/baseline && mv screenshots/current screenshots/baseline"
     },
     "repository": {

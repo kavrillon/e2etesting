@@ -137,9 +137,9 @@ pages.list.forEach((page) => {
                     // Due to an error on Browserstack (the getSource method does not return the doctype, we remove this error
                     if (!msg.message.match('doctype')) {
                         if (msg.type === 'error') {
-                            logMessage += `|||${msg.type}: ${msg.message}`;
+                            logMessage += `|||${msg.type[0].toUpperCase() + msg.type.substring(1)}: ${msg.message}`;
                             if (msg.extract) {
-                                logMessage += `###l.${msg.lastLine}: ${msg.extract.trim().replace('\\n', '')}`;
+                                logMessage += `###Line ${msg.lastLine}: ${msg.extract.trim().replace('\\n', '')}`;
                             }
                             countErrors++;
                         }
@@ -173,13 +173,13 @@ pages.list.forEach((page) => {
             }).then((results) => {
                 if (results) {
                     results.forEach((msg) => {
-                        logMessage += `|||${msg.type}: ${msg.message}`;
+                        logMessage += `|||${msg.type[0].toUpperCase() + msg.type.substring(1)}: ${msg.message}`;
                         if (msg.selector) {
                             logMessage += `###Selector: ${msg.selector}`;
                         }
-                        // if (msg.context) {
-                            // logMessage += `###Context: ${msg.context}`;
-                        // }
+                        if (msg.context) {
+                            logMessage += `###Context: ${JSON.stringify(msg.context).replace(/\\/g, '')}`;
+                        }
                         if (msg.type === 'error') {
                             countErrors++;
                         }
