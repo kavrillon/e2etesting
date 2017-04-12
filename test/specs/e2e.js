@@ -1,7 +1,7 @@
 var w3cjs = require('w3cjs');
 require('jasmine2-custom-message');
 var pages = require('../../config/pages');
-const baseUrl = pages.baseUrl;
+const baseUrl = pages.htaccess != '' ? pages.baseUrl.replace(/(http[s]*:\/\/)/, '$1' + pages.htaccess + '@') : pages.baseUrl;
 
 
 pages.list.forEach((page) => {
@@ -15,7 +15,7 @@ pages.list.forEach((page) => {
         });
 
         it('should be the same body', () => {
-            browser.pause(3000);
+            browser.pause(5000);
             expect(browser.checkDocument()[0].isWithinMisMatchTolerance).toBe(true);
         });
     });

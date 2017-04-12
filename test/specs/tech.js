@@ -3,8 +3,7 @@ require('jasmine2-custom-message');
 const w3cjs = require('w3cjs');
 const pa11y = require('pa11y');
 const pages = require('../../config/pages');
-const baseUrl = pages.baseUrl;
-
+const baseUrl = pages.htaccess != '' ? pages.baseUrl.replace(/(http[s]*:\/\/)/, '$1' + pages.htaccess + '@') : pages.baseUrl;
 
 pages.list.forEach((page) => {
     describe('# Technical: ' + baseUrl + page.url + ' ', () => {
