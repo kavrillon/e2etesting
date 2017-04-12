@@ -139,7 +139,7 @@ pages.list.forEach((page) => {
                         if (msg.type === 'error') {
                             logMessage += `|||${msg.type[0].toUpperCase() + msg.type.substring(1)}: ${msg.message}`;
                             if (msg.extract) {
-                                logMessage += `###Line ${msg.lastLine}: ${msg.extract.trim().replace('\\n', '')}`;
+                                logMessage += `###Line ${msg.lastLine}: ${JSON.stringify(msg.extract.replace(/[^\x20-\x7E]/gmi, '').trim())}`;
                             }
                             countErrors++;
                         }
@@ -178,7 +178,7 @@ pages.list.forEach((page) => {
                             logMessage += `###Selector: ${msg.selector}`;
                         }
                         if (msg.context) {
-                            logMessage += `###Context: ${JSON.stringify(msg.context).replace(/\\/g, '')}`;
+                            logMessage += `###Context: ${JSON.stringify(msg.context.replace(/[^\x20-\x7E]/gmi, ''))}`;
                         }
                         if (msg.type === 'error') {
                             countErrors++;
