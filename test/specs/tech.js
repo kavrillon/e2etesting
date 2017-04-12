@@ -72,7 +72,9 @@ pages.list.forEach((page) => {
         });
 
         it('should have no empty heading', () => {
-            let texts = browser.getText('h1,h2,h3,h4,h5,h6');
+
+            // Using getHTML instead of getText because of headers have to be interactable - so we remove html after
+            let texts = browser.getHTML('h1,h2,h3,h4,h5,h6');
             let isEmpty = false;
 
             if (texts) {
@@ -81,7 +83,7 @@ pages.list.forEach((page) => {
                 }
 
                 texts.forEach((elt) => {
-                    if (elt.trim() === '') {
+                    if (elt.replace(/<[^>]+>/g, '').trim() === '') {
                         isEmpty = true;
                     }
                 });
@@ -189,6 +191,5 @@ pages.list.forEach((page) => {
                 since(logMessage).expect(countErrors).toBe(0);
             });
         });
-
     });
 });
