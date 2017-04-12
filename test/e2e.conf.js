@@ -38,6 +38,7 @@ var host = '0.0.0.0';
 var port = 4444;
 var browserstackLocal = false;
 var services = ['visual-regression'];
+var baseUrl = pages.htaccess != '' ? pages.baseUrl.replace(/(http[s]*:\/\/)/, '$1' + pages.htaccess + '@') : pages.baseUrl;
 
 /*
  * Check Browserstack username & access key (if not in PhantomJS mode)
@@ -76,6 +77,7 @@ else {
  */
 
 function getPageNumberFromUrl(url) {
+    url = url.replace(pages.htaccess + '@', '');
     url = url.replace(pages.baseUrl, '');
 
     for (var i=0; i<pages.list.length; i++) {
@@ -189,7 +191,7 @@ exports.config = {
     //
     // Set a base URL in order to shorten url command calls. If your url parameter starts
     // with "/", then the base url gets prepended.
-    baseUrl: pages.baseUrl,
+    baseUrl: baseUrl,
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
