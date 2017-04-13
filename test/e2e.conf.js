@@ -95,7 +95,7 @@ function getScreenshotName(basePath) {
         var testName = context.meta.element === undefined ? 'body' : context.meta.element;
         var browserVersion = parseInt(context.browser.version, 10);
         var browserName = context.browser.name;
-        var title = page + '_' + testName + '_' + browserName + '_v' + browserVersion + '.png';
+        var title = browserName + '_v' + browserVersion + '_' + page + '_' + testName + '.png';
         return path.join(basePath, title);
     };
 }
