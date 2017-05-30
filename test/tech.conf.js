@@ -24,6 +24,8 @@ var datetime = currentdate.getFullYear() + '/'
 var host = '0.0.0.0';
 var port = 4444;
 var browsers = [{browserName: 'phantomjs'}];
+var baseUrl = pages.htaccess != '' ? pages.baseUrl.replace(/(http[s]*:\/\/)/, '$1' + pages.htaccess + '@') : pages.baseUrl;
+
 
 
 /*
@@ -114,7 +116,7 @@ exports.config = {
     //
     // Set a base URL in order to shorten url command calls. If your url parameter starts
     // with "/", then the base url gets prepended.
-    baseUrl: pages.baseUrl,
+    baseUrl: baseUrl,
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
