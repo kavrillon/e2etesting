@@ -6,6 +6,7 @@
 var path = require('path');
 var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
 var pages = require('./../config/pages');
+var Utils = require('./utils');
 var FOCheckerReporter = require('./FOCheckerReporter');
 
 /*
@@ -38,7 +39,7 @@ var host = '0.0.0.0';
 var port = 4444;
 var browserstackLocal = false;
 var services = ['visual-regression'];
-var baseUrl = pages.htaccess != '' ? pages.baseUrl.replace(/(http[s]*:\/\/)/, '$1' + pages.htaccess + '@') : pages.baseUrl;
+var baseUrl = Utils.getBaseUrl(pages);
 
 /*
  * Check Browserstack username & access key (if not in PhantomJS mode)
@@ -81,7 +82,7 @@ function getPageNumberFromUrl(url) {
     url = url.replace(pages.baseUrl, '');
 
     for (var i=0; i<pages.list.length; i++) {
-        if (pages.list[i].url === url) {
+        if (encodeURI(pages.list[i].url) === url) {
             return pages.list[i].name;
         }
     }
@@ -93,9 +94,9 @@ function getScreenshotName(basePath) {
         // var type = context.type;
         var page = getPageNumberFromUrl(context.meta.url);
         var testName = context.meta.element === undefined ? 'body' : context.meta.element;
-        var browserVersion = parseInt(context.browser.version, 10);
-        var browserName = context.browser.name;
-        var title = browserName + '_v' + browserVersion + '_' + page + '_' + testName + '.png';
+        var browserVersion = context.desiredCapabilities.browser_version ? '_v' + context.desiredCapabilities.browser_version : '';
+        var browserName = context.desiredCapabilities.browserName;
+        var title = browserName + browserVersion + '_' + page + '_' + testName + '.png';
         return path.join(basePath, title);
     };
 }
@@ -126,13 +127,13 @@ exports.config = {
     // ==================
     // Specify Test Files
     // ==================
-    // Define which test specs should run. The pattern is relative to the directory
+    // Define which tests specs should run. The pattern is relative to the directory
     // from which `wdio` was called. Notice that, if you are calling `wdio` from an
     // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './test/specs/e2e.js'
+        './tests/specs/e2e.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -143,7 +144,7 @@ exports.config = {
     // Capabilities
     // ============
     // Define your capabilities here. WebdriverIO can run multiple capabilities at the same
-    // time. Depending on the number of capabilities, WebdriverIO launches several test
+    // time. Depending on the number of capabilities, WebdriverIO launches several tests
     // sessions. Within your capabilities you can overwrite the spec and exclude options in
     // order to group specific specs to a specific capability.
     //
@@ -152,7 +153,7 @@ exports.config = {
     // set maxInstances to 1; wdio will spawn 3 processes. Therefore, if you have 10 spec
     // files and you set maxInstances to 10, all spec files will get tested at the same time
     // and 30 processes will get spawned. The property handles how many capabilities
-    // from the same test should run tests.
+    // from the same tests should run tests.
     //
     maxInstances: 10,
     //
@@ -223,8 +224,8 @@ exports.config = {
     //
     // Test runner services
     // Services take over a specific job you don't want to take care of. They enhance
-    // your test setup with almost no effort. Unlike plugins, they don't add new
-    // commands. Instead, they hook themselves up into the test process.
+    // your tests setup with almost no effort. Unlike plugins, they don't add new
+    // commands. Instead, they hook themselves up into the tests process.
     services: services,
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -259,9 +260,9 @@ exports.config = {
 
     visualRegression: {
         compare: new VisualRegressionCompare.LocalCompare({
-            referenceName: getScreenshotName(path.join(process.cwd(), 'screenshots/baseline')),
-            screenshotName: getScreenshotName(path.join(process.cwd(), 'screenshots/current')),
-            diffName: getScreenshotName(path.join(process.cwd(), 'screenshots/diff')),
+            referenceName: getScreenshotName(path.join(process.cwd(), 'tests/screenshots/baseline')),
+            screenshotName: getScreenshotName(path.join(process.cwd(), 'tests/screenshots/current')),
+            diffName: getScreenshotName(path.join(process.cwd(), 'tests/screenshots/diff')),
             misMatchTolerance: 0.01,
         }),
         viewportChangePause: 300,
@@ -273,7 +274,7 @@ exports.config = {
     // =====
     // Hooks
     // =====
-    // WebdriverIO provides several hooks you can use to interfere with the test process in order to enhance
+    // WebdriverIO provides several hooks you can use to interfere with the tests process in order to enhance
     // it and to build services around it. You can either apply a single function or an array of
     // methods to it. If one of them returns with a promise, WebdriverIO will wait until that promise got
     // resolved to continue.
@@ -282,12 +283,12 @@ exports.config = {
     // onPrepare: function (config, capabilities) {
     // },
     //
-    // Gets executed just before initialising the webdriver session and test framework. It allows you
+    // Gets executed just before initialising the webdriver session and tests framework. It allows you
     // to manipulate configurations depending on the capability or spec.
     // beforeSession: function (config, capabilities, specs) {
     // },
     //
-    // Gets executed before test execution begins. At this point you can access all global
+    // Gets executed before tests execution begins. At this point you can access all global
     // variables, such as `browser`. It is the perfect place to define custom commands.
     before: function (capabilities, specs) {
         require('babel-register');
@@ -307,8 +308,8 @@ exports.config = {
     // afterHook: function () {
     // },
     //
-    // Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
-    // beforeTest: function (test) {
+    // Function to be executed before a tests (in Mocha/Jasmine) or a step (in Cucumber) starts.
+    // beforeTest: function (tests) {
     // },
     //
     // Runs before a WebdriverIO command gets executed.
@@ -319,8 +320,8 @@ exports.config = {
     // afterCommand: function (commandName, args, result, error) {
     // },
     //
-    // Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
-    // afterTest: function (test) {
+    // Function to be executed after a tests (in Mocha/Jasmine) or a step (in Cucumber) starts.
+    // afterTest: function (tests) {
     // },
     //
     // Hook that gets executed after the suite has ended
@@ -328,7 +329,7 @@ exports.config = {
     // },
     //
     // Gets executed after all tests are done. You still have access to all global variables from
-    // the test.
+    // the tests.
     // after: function (result, capabilities, specs) {
     // },
     //

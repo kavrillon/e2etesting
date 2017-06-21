@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>FO Checker Report</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                font-family: 'Roboto', sans-serif;
+                background: rgba(0, 0, 0, .05);
+                margin: 0;
+            }
+            a {
+                color: #000;
+            }
+            .suite {
+                box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+                background: #fff;
+                margin: 30px 60px;
+                padding: 15px;
+                color: #000;
+            }
+            .suite__header:after {
+                content: '';
+                display: block;
+                clear: both;
+            }
+            .suite__header {
+                display: flex;
+                margin: 0 1% 10px;
+                font-size: 1.1rem;
+                cursor: pointer;
+            }
+            .suite__results:after {
+                content: '';
+                display: block;
+                clear: both;
+            }
+            .suite__header__specs {
+                flex: 1;
+            }
+            .suite__header__combo {
+                flex: 1;
+                text-align: right;
+            }
+            .result { margin: 15px 0; }
+            .result--error .result__spec:before {
+                color: #ff6384;
+                font-weight: bold;
+                content: '✖';
+            }
+            .result__spec {
+                margin-bottom: 10px;
+                padding: 5px 15px 5px 30px;
+                border-radius: 2px;
+                background: rgba(0, 0, 0, .05);
+                font-weight: 400;
+                letter-spacing: normal;
+                line-height: 1.4rem;
+            }
+            .result__spec:before {
+                color: #44d279;
+                font-weight: bold;
+                content: '✓';
+                margin-left: -30px;
+                padding: 0 15px;
+            }
+            .result__test {
+                display: none;
+                margin-bottom: 10px;
+                padding: 0 15px;
+                font-size: .8rem;
+            }
+            .suite.active .result__test {
+                display: block;
+            }
+            .result__test--fail .result__test__header {
+                display: inline-block;
+                background: #ff6384;
+                padding: 4px 10px;
+                border-radius: 4px;
+            }
+            .result__test--pass {
+                opacity: .3;
+            }
+            .result__test__header__symbol { display: inline-block; margin-right: 5px; }
+            .result__test__header__title { display: inline-block; }
+            .result__test__header__count { display: inline-block; margin-left: 5px; }
+            .result__test__msg {
+                display: list-item;
+                list-style-position: outside;
+                list-style-type: decimal;
+                margin: 15px 0 10px 20px;
+            }
+            .result__test__info {
+                color: black;
+                margin: 0 0 0 20px;
+                opacity: .3;
+            }
+            .pic {
+                display: none;
+                margin: 15px 0;
+                width: 100%;
+                cursor: pointer;
+            }
+            .pic.active {
+                display: block;
+            }
+            .result__test__screens {
+                margin: 15px 0 0;
+                text-align: center;
+            }
+            .result__test__screens__screen {
+                display: inline-block;
+                width: 200px;
+                max-height: 200px;
+                overflow: hidden;
+                border: 2px solid #eee;
+                cursor: pointer;
+                margin: 15px;
+            }
+            .result__test__screens__screen__pic {
+                display: block;
+                width: 100%;
+            }
+            .result__test__screens__screen__title {
+                padding: 5px 0;
+                text-align: center;
+                text-transform: uppercase;
+                background: rgba(0, 0, 0, .05);
+            }
+        </style>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.suite__header').click(function() {
+                    $(this).parents('.suite').toggleClass('active');
+                });
+            });
+        </script>
+    </head>
+    <body>
+<div class="suite active"><div class="suite__header"><div class="suite__header__specs">Specs: tech</div><div class="suite__header__combo">Browser: phantomjs</div></div><div class="suite__results"><div class="result "><div class="result__spec">URL: <a href="http://localhost:8080/">http://localhost:8080/</a></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have a &lt;title&gt;</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have a description meta</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have one &lt;h1&gt;</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have no hidden heading (h levels)</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have no empty heading</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have no hierarchy break in headings</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have no W3C errors</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have no A11Y errors</div><div class="result__test__header__count"></div></div></div></div><div class="result result--error"><div class="result__spec">URL: <a href="http://localhost:8080/?test">http://localhost:8080/?test</a></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have a &lt;title&gt;</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have a description meta</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have one &lt;h1&gt;</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have no hidden heading (h levels)</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have no empty heading</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--fail"><div class="result__test__header"><div class="result__test__header__symbol" title="fail">1)</div><div class="result__test__header__title">should have no hierarchy break in headings</div><div class="result__test__header__count">: 1 error</div></div><div class="result__test__msg">A &lt;h5&gt; is present without &lt;h4&gt;</div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have no W3C errors</div><div class="result__test__header__count"></div></div></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should have no A11Y errors</div><div class="result__test__header__count"></div></div></div></div></div></div></div><div class="suite active"><div class="suite__header"><div class="suite__header__specs">Specs: e2e</div><div class="suite__header__combo">Browser: IE</div></div><div class="suite__results"><div class="result "><div class="result__spec">URL: <a href="http://localhost:8080/">http://localhost:8080/</a></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should be the same &lt;body&gt;</div><div class="result__test__header__count"></div></div><div class="result__test__screens"><div class="result__test__screens__screen"><div class="result__test__screens__screen__title" >Baseline</div><img class="result__test__screens__screen__pic" onclick="window.open('screenshots/baseline/IE_v11.0_home_body.png','_blank');" src="screenshots/baseline/IE_v11.0_home_body.png" /></div><div class="result__test__screens__screen"><div class="result__test__screens__screen__title" >Current screenshot</div><img class="result__test__screens__screen__pic" onclick="window.open('screenshots/current/IE_v11.0_home_body.png','_blank');" src="screenshots/current/IE_v11.0_home_body.png" /></div></div></div></div><div class="result "><div class="result__spec">URL: <a href="http://localhost:8080/?test">http://localhost:8080/?test</a></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should be the same &lt;body&gt;</div><div class="result__test__header__count"></div></div><div class="result__test__screens"><div class="result__test__screens__screen"><div class="result__test__screens__screen__title" >Baseline</div><img class="result__test__screens__screen__pic" onclick="window.open('screenshots/baseline/IE_v11.0_test_body.png','_blank');" src="screenshots/baseline/IE_v11.0_test_body.png" /></div><div class="result__test__screens__screen"><div class="result__test__screens__screen__title" >Current screenshot</div><img class="result__test__screens__screen__pic" onclick="window.open('screenshots/current/IE_v11.0_test_body.png','_blank');" src="screenshots/current/IE_v11.0_test_body.png" /></div></div></div></div></div></div></div><div class="suite active"><div class="suite__header"><div class="suite__header__specs">Specs: e2e</div><div class="suite__header__combo">Browser: Chrome</div></div><div class="suite__results"><div class="result "><div class="result__spec">URL: <a href="http://localhost:8080/">http://localhost:8080/</a></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should be the same &lt;body&gt;</div><div class="result__test__header__count"></div></div><div class="result__test__screens"><div class="result__test__screens__screen"><div class="result__test__screens__screen__title" >Baseline</div><img class="result__test__screens__screen__pic" onclick="window.open('screenshots/baseline/Chrome_home_body.png','_blank');" src="screenshots/baseline/Chrome_home_body.png" /></div><div class="result__test__screens__screen"><div class="result__test__screens__screen__title" >Current screenshot</div><img class="result__test__screens__screen__pic" onclick="window.open('screenshots/current/Chrome_home_body.png','_blank');" src="screenshots/current/Chrome_home_body.png" /></div></div></div></div><div class="result "><div class="result__spec">URL: <a href="http://localhost:8080/?test">http://localhost:8080/?test</a></div><div class="result__test result__test--pass"><div class="result__test__header"><div class="result__test__header__symbol" title="pass">✓</div><div class="result__test__header__title">should be the same &lt;body&gt;</div><div class="result__test__header__count"></div></div><div class="result__test__screens"><div class="result__test__screens__screen"><div class="result__test__screens__screen__title" >Baseline</div><img class="result__test__screens__screen__pic" onclick="window.open('screenshots/baseline/Chrome_test_body.png','_blank');" src="screenshots/baseline/Chrome_test_body.png" /></div><div class="result__test__screens__screen"><div class="result__test__screens__screen__title" >Current screenshot</div><img class="result__test__screens__screen__pic" onclick="window.open('screenshots/current/Chrome_test_body.png','_blank');" src="screenshots/current/Chrome_test_body.png" /></div></div></div></div></div></div></div></body></html>

@@ -3,23 +3,24 @@ require('jasmine2-custom-message');
 const w3cjs = require('w3cjs');
 const pa11y = require('pa11y');
 const pages = require('../../config/pages');
-const baseUrl = pages.htaccess != '' ? pages.baseUrl.replace(/(http[s]*:\/\/)/, '$1' + pages.htaccess + '@') : pages.baseUrl;
+var Utils = require('./../utils');
+var baseUrl = Utils.getBaseUrl(pages);
 
 pages.list.forEach((page) => {
     describe('# Technical: ' + baseUrl + page.url + ' ', () => {
         beforeAll(function (done) {
-            browser.url(page.url).call(done);
+            browser.url(baseUrl + page.url).call(done);
         });
 
         afterAll(function (done) {
             browser.end(done);
         });
 
-        it('should be a title', () => {
+        it('should have a <title>', () => {
             expect(browser.getTitle()).not.toBe('');
         });
 
-        it('should be a description', () => {
+        it('should have a description meta', () => {
             expect(browser.getAttribute('meta[name="description"]', 'content')).not.toBe('');
         });
 
@@ -136,14 +137,12 @@ pages.list.forEach((page) => {
                 let countErrors = 0;
                 messages.forEach((msg) => {
                     // Due to an error on Browserstack (the getSource method does not return the doctype, we remove this error
-                    if (!msg.message.match('doctype')) {
-                        if (msg.type === 'error') {
-                            logMessage += `|||${msg.type[0].toUpperCase() + msg.type.substring(1)}: ${msg.message}`;
-                            if (msg.extract) {
-                                logMessage += `###Line ${msg.lastLine}: ${JSON.stringify(msg.extract.replace(/[^\x20-\x7E]/gmi, '').trim())}`;
-                            }
-                            countErrors++;
+                    if (!msg.message.match('doctype') && msg.type === 'error') {
+                        logMessage += `|||${msg.type[0].toUpperCase() + msg.type.substring(1)}: ${msg.message}`;
+                        if (msg.extract) {
+                            logMessage += `###Line ${msg.lastLine}: ${JSON.stringify(msg.extract.replace(/[^\x20-\x7E]/gmi, '').trim())}`;
                         }
+                        countErrors++;
                     }
 
                 });
